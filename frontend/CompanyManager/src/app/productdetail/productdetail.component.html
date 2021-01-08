@@ -1,0 +1,19 @@
+<div class="main">
+	<h1 *ngIf="product.id !== 0">Edit Product</h1>
+	<h1 *ngIf="product.id === 0">New Product</h1>
+	<form>
+		<mat-form-field>
+			<mat-label>Name</mat-label>
+			<input name="username" matInput [(ngModel)]="product.name" />
+		</mat-form-field>
+
+		<br />
+
+		<mat-form-field>
+			<mat-label>Price</mat-label>
+			<input name="pw" type="number" matInput [(ngModel)]="product.price" />
+		</mat-form-field>
+	</form>
+
+	<button mat-button color="primary" (click)="saveProduct()">Save</button>
+</div>
