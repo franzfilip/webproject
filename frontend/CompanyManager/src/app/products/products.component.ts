@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { product } from '../model/product';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-products',
@@ -12,7 +13,7 @@ export class ProductsComponent implements OnInit {
   products: product[];
   displayedColumns: string[] = [ 'id', 'name', 'price', 'action' ];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.fetchProducts();
@@ -35,6 +36,7 @@ export class ProductsComponent implements OnInit {
     xhr.responseType = 'json';
     xhr.open('POST', server);
     xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('Authorization', this.authService.jwtoken);
     var context = this;
     xhr.onload = function () {
         console.log('data returned:', xhr.response);

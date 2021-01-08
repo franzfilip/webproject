@@ -48,7 +48,8 @@ import { UserloginComponent } from './userlogin/userlogin.component';
     GraphQLModule,
     HttpClientModule,
     FormsModule,
-    MatSelectModule
+    MatSelectModule,
+    HttpClientModule,
   ],
   exports: [
     MatSidenavModule,

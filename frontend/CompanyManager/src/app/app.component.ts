@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { UserserviceService } from './services/userservice.service';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -9,5 +9,5 @@ import { UserserviceService } from './services/userservice.service';
 export class AppComponent {
   title = 'CompanyManager';
 
-  constructor(private userService: UserserviceService) {}
+  constructor(private authService: AuthService) {}
 }

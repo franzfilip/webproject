@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ProductdetailComponent } from './productdetail/productdetail.component';
 import { ProductsComponent } from './products/products.component';
 import { UserdetailComponent } from './userdetail/userdetail.component';
+import { UserloginComponent } from './userlogin/userlogin.component';
 import { UsersComponent } from './users/users.component';
 
 const routes: Routes = [
@@ -10,7 +11,8 @@ const routes: Routes = [
   { path: 'users', component: UsersComponent },
   { path: 'users/:id', component: UserdetailComponent },
   { path: 'products/:id', component: ProductdetailComponent },
-  { path: '', redirectTo: '/users', pathMatch: 'full' }
+  { path: 'login', component: UserloginComponent},
+  // { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];
 
 @NgModule({

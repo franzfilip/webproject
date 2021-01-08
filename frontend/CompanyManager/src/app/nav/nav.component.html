@@ -1,7 +1,9 @@
 <mat-toolbar color="primary" class="navbar">
-	<div>Companymanager</div>
+	<div *ngIf="!authService.jwtoken">Companymanager</div>
+	<div *ngIf="authService.jwtoken">Companymanager</div>
+
 	<div>
-		<span *ngIf="userService.activeUser.id !== 0"><a routerLink="/users">Users</a></span>
-		<span *ngIf="userService.activeUser.id !== 0"><a routerLink="/products">Products</a></span>
+		<span *ngIf="authService.jwtoken"><a routerLink="/users">Users</a></span>
+		<span *ngIf="authService.jwtoken"><a routerLink="/products">Products</a></span>
 	</div>
 </mat-toolbar>

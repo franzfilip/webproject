@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { user } from '../model/user';
-import { UserserviceService } from '../services/userservice.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-users',
@@ -13,7 +13,7 @@ export class UsersComponent implements OnInit {
   users: user[];
   displayedColumns: string[] = [ 'id', 'name', 'action' ];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.fetchUsers();
@@ -37,6 +37,7 @@ export class UsersComponent implements OnInit {
     xhr.responseType = 'json';
     xhr.open('POST', server);
     xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('Authorization', this.authService.jwtoken);
     var context = this;
     xhr.onload = function () {
         console.log('data returned:', xhr.response);

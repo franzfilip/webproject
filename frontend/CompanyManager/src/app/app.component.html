@@ -1,3 +1,7 @@
 <app-nav></app-nav>
 
+<div class="main">
+	<app-userlogin *ngIf="!authService.jwtoken"></app-userlogin>
+</div>
+
 <router-outlet></router-outlet>
