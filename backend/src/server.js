@@ -33,7 +33,7 @@ verifyToken.unless = unless;
 
 app.use(express.json());
 
-app.post('/auth', (req, res) => {
+app.post('/auth', cors({ credentials: true, origin: 'http://localhost:4200/' }),(req, res) => {
   login(req.body).then((token) => {
     if(token == false){
       return res.status(401).json({
@@ -46,7 +46,7 @@ app.post('/auth', (req, res) => {
 
 app.use(verifyToken.unless({ path: ['/auth'] }));
 
-app.use('/graphql', cors("*"), graphqlHTTP({
+app.use('/graphql', cors({ credentials: true, origin: 'http://localhost:4200/' }), graphqlHTTP({
   schema: schema,
   graphiql: true
 }));

@@ -24,10 +24,6 @@ var Product = sequelize.define('product', {
         field: 'id',
         primaryKey: true
     },
-    // companyId: {
-    //     type: DataTypes.INTEGER,
-    //     field: "companyId"
-    // },
     name: {
         type: DataTypes.STRING,
         field: "name",

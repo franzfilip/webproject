@@ -4,15 +4,12 @@ var {
     GraphQLList,
     GraphQLInt,
     GraphQLNonNull,
-    GraphQLSchema
+    GraphQLSchema,
+    GraphQLFloat
     }
     = require('graphql');
 const { resolver } = require('graphql-sequelize');
 
-// const { CompanyObjectType, Company } = require("./models/company");
-// const { ProductObjectType, Product } = require("./models/product");
-// const { UserObjectType, User } = require("./models/user");
-// const { RoleObjectType, Role } = require("./models/role");
 const {
     Company,
     CompanyObjectType,
@@ -84,7 +81,18 @@ const RootMutationQueryType = new GraphQLObjectType({
               name: { type: GraphQLString }
           },
           resolve: (parent, args) => Company.create({name: args.name})
-      }
+      },
+    //   addProduct: {
+    //       type: ProductObjectType,
+    //       args: {
+    //         productId: { type: GraphQLInt },
+    //         name: { type: GraphQLString },
+    //         price: { type: GraphQLFloat}
+    //       },
+    //       resolve: (parents, args) => Product.update({
+
+    //       })
+    //   }
     })
   });
 
