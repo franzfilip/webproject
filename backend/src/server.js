@@ -20,11 +20,12 @@ const schema = new GraphQLSchema({
   query: RootQueryType,
   mutation: RootMutationQueryType
 });
+const secret = "secret";
 
 const verifyToken = (req, res, next) => {  
-  jwt.verify(req.headers.authorization, 'secret', (err, decoded) => {
+  jwt.verify(req.headers.authorization, secret, (err, decoded) => {
     if (err){      
-      return res.send(401);
+      return res.sendStatus(401);
     }
     next();
   });
@@ -60,9 +61,8 @@ async function login(data){
   });
 
   const roleData = await Role.findByPk(userdata.roleId);
-  console.log(roleData);
   if (bcrypt.compareSync(data.password, userdata.pw)){
-    const token = jwt.sign({ username: userdata.name, role: roleData.name }, 'secret');
+    const token = jwt.sign({ username: userdata.name, role: roleData.name }, secret);
     return token;
   }
   else{

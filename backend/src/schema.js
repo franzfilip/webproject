@@ -5,7 +5,8 @@ var {
     GraphQLInt,
     GraphQLNonNull,
     GraphQLSchema,
-    GraphQLFloat
+    GraphQLFloat,
+    GraphQLBoolean
     }
     = require('graphql');
 const { resolver } = require('graphql-sequelize');
@@ -75,26 +76,97 @@ const RootQueryType = new GraphQLObjectType({
 const RootMutationQueryType = new GraphQLObjectType({
     name: "Muation",
     fields: () => ({
-      addCompany: {
-          type: CompanyObjectType,
-          args: {
-              name: { type: GraphQLString }
-          },
-          resolve: (parent, args) => Company.create({name: args.name})
-      },
-    //   addProduct: {
-    //       type: ProductObjectType,
-    //       args: {
-    //         productId: { type: GraphQLInt },
-    //         name: { type: GraphQLString },
-    //         price: { type: GraphQLFloat}
-    //       },
-    //       resolve: (parents, args) => Product.update({
-
-    //       })
-    //   }
+        addCompany: {
+            type: CompanyObjectType,
+            args: {
+                name: { type: GraphQLString }
+            },
+            resolve: (parent, args) => Company.create({name: args.name})
+        },
+        addProduct: {
+            type: ProductObjectType,
+            args: {
+                companyId: { type: GraphQLInt },
+                name: { type: GraphQLString },
+                price: { type: GraphQLFloat}
+            },
+            resolve: (parents, args) => Product.create({
+                companyId: args.companyId,
+                name: args.name,
+                price: args.price
+            })
+        },
+        updateProduct: {
+            type: ProductObjectType,
+            args: {
+                productId: { type: GraphQLInt },
+                name: { type: GraphQLString },
+                price: { type: GraphQLFloat}
+            },
+            resolve: (parents, args) => {
+                Product.update({
+                    name: args.name,
+                    price: args.price
+                },
+                {
+                    where: {
+                        id: args.productId
+                    }
+                });
+                return Product.findByPk(args.productId);
+            }
+        },
+        deleteProduct: {
+            type: GraphQLBoolean,
+            args: {
+                productId: { type: GraphQLInt }
+            },
+            resolve: (parents, args) => {
+                Product.destroy({
+                    where: {
+                        id: args.productId
+                    }
+                });
+                return true;
+            }
+        },
+        addUser: {
+            type: UserObjectType,
+            args: {
+                companyId: { type: GraphQLInt },
+                name: { type: GraphQLString },
+                roleId: { type: GraphQLInt }
+            },
+            resolve: (parents, args) => User.create({
+                companyId: args.companyId,
+                name: args.name,
+                pw: "$2a$10$vhRzeVxiWLhBe1ldXnCkIeH7I/Z19jsTmYI9IW3sIXwp.oqTY7/G2",
+                roleId: args.roleId
+            })
+        },
+        updateUser: {
+            type: UserObjectType,
+            args: {
+                userId: { type: GraphQLInt },
+                name: { type: GraphQLString },
+                roleId: { type: GraphQLInt }
+            },
+            resolve: (parents, args) => {
+                User.update({
+                    name: args.name,
+                    roleId: args.roleId
+                },
+                {
+                    where: {
+                        id: args.userId
+                    }
+                });
+                return User.findByPk(args.userId);
+            }
+        }
     })
   });
+
 
 module.exports = {
     RootQueryType,
