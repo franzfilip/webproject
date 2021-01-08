@@ -24,10 +24,10 @@ var Product = sequelize.define('product', {
         field: 'id',
         primaryKey: true
     },
-    companyId: {
-        type: DataTypes.INTEGER,
-        field: "companyId"
-    },
+    // companyId: {
+    //     type: DataTypes.INTEGER,
+    //     field: "companyId"
+    // },
     name: {
         type: DataTypes.STRING,
         field: "name",
@@ -81,14 +81,25 @@ ProductObjectType = new GraphQLObjectType({
     }
 });
 
+Role.Users = Role.hasMany(User);
+
+RoleObjectType = new GraphQLObjectType({
+    name: 'role',
+    fields: {
+        ...attributeFields(Role)
+    },
+});
+
 User.Role = User.belongsTo(Role, { as: "role" });
 
 UserObjectType = new GraphQLObjectType({
     name: 'user',
-    fields: {...attributeFields(User)},
-    role: {
-        type: RoleObjectType,
-        resolve: resolver(User.Role)
+    fields: {
+        ...attributeFields(User),
+        role: {
+            type: RoleObjectType,
+            resolve: resolver(User.Role)
+        }
     }
 });
 
@@ -105,19 +116,6 @@ CompanyObjectType = new GraphQLObjectType({
             resolve: resolver(Company.Users)
         }
     }
-});
-
-Role.Users = Role.hasMany(User);
-
-RoleObjectType = new GraphQLObjectType({
-    name: 'role',
-    fields: {
-        ...attributeFields(Role),
-        users: {
-            type: new GraphQLList(UserObjectType),
-            resolve: resolver(Role.Users)
-        }
-    },
 });
 
 module.exports = {
