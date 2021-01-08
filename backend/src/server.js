@@ -32,7 +32,7 @@ const verifyToken = (req, res, next) => {
 verifyToken.unless = unless;
 
 app.use(express.json());
-// app.use(cors("*"));
+
 app.post('/auth', (req, res) => {
   login(req.body).then((token) => {
     if(token == false){
@@ -46,7 +46,7 @@ app.post('/auth', (req, res) => {
 
 app.use(verifyToken.unless({ path: ['/auth'] }));
 
-app.use('/graphql', graphqlHTTP({
+app.use('/graphql', cors("*"), graphqlHTTP({
   schema: schema,
   graphiql: true
 }));
