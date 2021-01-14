@@ -2,6 +2,7 @@
 
 <div class="main">
 	<app-userlogin *ngIf="!authService.jwtoken"></app-userlogin>
+	<!-- <app-userlogin *ngIf="!sessionStorage.getItem('jwtoken')"></app-userlogin> -->
 </div>
 
 <router-outlet></router-outlet>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -11,9 +12,10 @@ export class UserloginComponent implements OnInit {
   username: string;
   pw: string;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
+    // alert(sessionStorage.getItem("jwtoken"));
   }
 
   login(): void {
@@ -34,6 +36,8 @@ export class UserloginComponent implements OnInit {
     var context = this;
     xhr.onload = function () {
         context.authService.jwtoken = xhr.responseText;
+        sessionStorage.setItem("jwtoken", xhr.responseText);
+        context.router.navigateByUrl('/users');
     }.bind(context);
 
     xhr.send(serverQuery);

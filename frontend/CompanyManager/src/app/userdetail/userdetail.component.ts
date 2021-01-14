@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { user } from '../model/user';
 import { AuthService } from '../services/auth.service';
@@ -10,17 +11,14 @@ import { AuthService } from '../services/auth.service';
 })
 export class UserdetailComponent implements OnInit {
 
-  user: user = new user(0, '', '', 0);
+  user: user = new user();
 
-  constructor(private route: ActivatedRoute, private authService: AuthService, private router: Router) { }
+  constructor(private route: ActivatedRoute, private authService: AuthService, private router: Router, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     let id = this.route.snapshot.params['id'];
 
-    if (id !== 0)
-      this.fetchUser(id);
-    else
-      this.user = new user(0, '', '', 0);
+    this.fetchUser(id);
   }
 
   fetchUser(id: number): void {
@@ -45,7 +43,8 @@ export class UserdetailComponent implements OnInit {
     var context = this;
     xhr.onload = function () {
         console.log('data returned:', xhr.response);
-        context.user = xhr.response.data.user;
+        if (xhr.response.data.user !== null)
+          context.user = xhr.response.data.user;
     }.bind(context);
 
     xhr.send(JSON.stringify(serverQuery));
@@ -58,7 +57,7 @@ export class UserdetailComponent implements OnInit {
     if (this.user.id === 0) {
       serverQuery = { 
         query: `mutation {
-          addUser(companyId:1, name:${this.user.name}, roleId:${this.user.roleId}){
+          addUser(companyId:1, name:\"${this.user.name}\", roleId:${this.user.roleId}){
             id
           }
         }
@@ -83,10 +82,20 @@ export class UserdetailComponent implements OnInit {
     let context = this;
     xhr.onload = function () {
         console.log('data returned:', xhr.response);
-        context.router.navigateByUrl('/users');
+        const dialogRef = this.dialog.open(UserDialog);
+
+        dialogRef.afterClosed().subscribe(result => {
+          context.router.navigateByUrl('/users');
+        });
     }.bind(context);
 
     xhr.send(JSON.stringify(serverQuery));
   }
 
 }
+
+@Component({
+  selector: 'user-dialog',
+  templateUrl: './user-dialog.html',
+})
+export class UserDialog {}

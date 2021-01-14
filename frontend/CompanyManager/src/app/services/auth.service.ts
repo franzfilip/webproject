@@ -12,9 +12,11 @@ export class AuthService {
 
   AUTH_SERVER = "http://localhost:5000/auth";
   authSubject = new BehaviorSubject(false);
-  jwtoken: string = "";
+  jwtoken: string = sessionStorage.getItem("jwtoken");
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {
+    this.jwtoken = sessionStorage.getItem("jwtoken");
+  }
 
   signIn(user: User): Observable<JwtResponse> {
     return this.httpClient.post(`${this.AUTH_SERVER}`, user).pipe(

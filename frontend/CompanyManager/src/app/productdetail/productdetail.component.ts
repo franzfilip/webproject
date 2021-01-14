@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { product } from '../model/product';
 import { AuthService } from '../services/auth.service';
@@ -12,13 +13,12 @@ export class ProductdetailComponent implements OnInit {
 
   product: product = new product();
 
-  constructor(private route: ActivatedRoute, private authService: AuthService, private router: Router) { }
+  constructor(private route: ActivatedRoute, private authService: AuthService, private router: Router, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     let id = this.route.snapshot.params['id'];
 
-    if (id !== 0)
-      this.fetchProduct(id);
+    this.fetchProduct(id);
   }
 
   fetchProduct(id: number): void {
@@ -42,7 +42,8 @@ export class ProductdetailComponent implements OnInit {
     var context = this;
     xhr.onload = function () {
         console.log('data returned:', xhr.response);
-        context.product = xhr.response.data.product;
+        if (xhr.response.data.product !== null)
+          context.product = xhr.response.data.product;
     }.bind(context);
 
     xhr.send(JSON.stringify(serverQuery));
@@ -55,7 +56,7 @@ export class ProductdetailComponent implements OnInit {
     if (this.product.id === 0) {
       serverQuery = {
         query: `mutation {
-          addProduct(productId:${this.product.id},name:\"${this.product.name}\",price:${this.product.price}){
+          addProduct(companyId: 1, name:\"${this.product.name}\",price:${this.product.price}){
             id
           }
         }
@@ -77,15 +78,24 @@ export class ProductdetailComponent implements OnInit {
     xhr.open('POST', server);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.setRequestHeader('Authorization', this.authService.jwtoken);
-    let context = this;
+    let context = this; 
     xhr.onload = function () {
         console.log('data returned:', xhr.response);
-        context.router.navigateByUrl('/users');
+        
+        const dialogRef = this.dialog.open(ProductDialog);
+
+        dialogRef.afterClosed().subscribe(result => {
+          context.router.navigateByUrl('/products');
+        });
     }.bind(context);
 
     xhr.send(JSON.stringify(serverQuery));
-
-    this.router.navigateByUrl('/products');
   }
 
 }
+
+@Component({
+  selector: 'product-dialog',
+  templateUrl: './product-dialog.html',
+})
+export class ProductDialog {}

@@ -9,15 +9,17 @@ import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ProductsComponent } from './products/products.component';
+import { ProductsComponent, DeleteDialog } from './products/products.component';
 import { NavComponent } from './nav/nav.component';
 import { UsersComponent } from './users/users.component';
-import { UserdetailComponent } from './userdetail/userdetail.component';
-import { ProductdetailComponent } from './productdetail/productdetail.component';
+import { UserdetailComponent, UserDialog } from './userdetail/userdetail.component';
+import { ProductdetailComponent, ProductDialog } from './productdetail/productdetail.component';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -28,10 +30,13 @@ import { UserloginComponent } from './userlogin/userlogin.component';
     AppComponent,
     NavComponent,
     ProductsComponent,
+    DeleteDialog,
     NavComponent,
     UsersComponent,
     UserdetailComponent,
+    UserDialog,
     ProductdetailComponent,
+    ProductDialog,
     UserloginComponent
   ],
   imports: [
@@ -50,6 +55,8 @@ import { UserloginComponent } from './userlogin/userlogin.component';
     FormsModule,
     MatSelectModule,
     HttpClientModule,
+    MatCardModule,
+    MatDialogModule
   ],
   exports: [
     MatSidenavModule,
@@ -59,7 +66,9 @@ import { UserloginComponent } from './userlogin/userlogin.component';
     MatTableModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCardModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,29 +1,31 @@
 <div class="main">
-	<h1>Users</h1>
-
-	<table mat-table [dataSource]="users" class="mat-elevation-z8">
-		<ng-container matColumnDef="id">
-			<th mat-header-cell *matHeaderCellDef>ID</th>
-			<td mat-cell *matCellDef="let element"> {{element.id}} </td>
-		</ng-container>
-
-		<ng-container matColumnDef="name">
-			<th mat-header-cell *matHeaderCellDef> Name </th>
-			<td mat-cell *matCellDef="let element"> {{element.name}} </td>
-		</ng-container>
-
-		<ng-container matColumnDef="action">
-			<th mat-header-cell *matHeaderCellDef></th>
-			<td mat-cell *matCellDef="let element">
-				<button mat-button color="primary" (click)="editClick(element.id)">Edit</button>
-				<button mat-button color="warn">Delete</button>
-			</td>
-		</ng-container>
-
-		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  		<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-	</table>
-
-	<br />
-	<button mat-button color="primary" (click)="editClick(0)">New User</button>
+	<div class="tableDiv">
+		<h1>Users</h1>
+	
+		<table mat-table [dataSource]="users" class="mat-elevation-z8">
+			<ng-container matColumnDef="id">
+				<th mat-header-cell *matHeaderCellDef>ID</th>
+				<td mat-cell *matCellDef="let element"> {{element.id}} </td>
+			</ng-container>
+	
+			<ng-container matColumnDef="name">
+				<th mat-header-cell *matHeaderCellDef> Name </th>
+				<td mat-cell *matCellDef="let element"> {{element.name}} </td>
+			</ng-container>
+	
+			<ng-container matColumnDef="action">
+				<th mat-header-cell *matHeaderCellDef class="actionCell">Action</th>
+				<td mat-cell *matCellDef="let element" class="actionCell">
+					<button mat-button color="primary" (click)="editClick(element.id)">Edit</button>
+					<button mat-button color="warn">Delete</button>
+				</td>
+			</ng-container>
+	
+			<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+	  		<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+		</table>
+	
+		<br />
+		<button mat-raised-button color="primary" (click)="editClick(0)">New User</button>
+	</div>
 </div>

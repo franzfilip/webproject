@@ -2,6 +2,17 @@
 	padding: 10px;
 }
 
+.tableDiv {
+	max-width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.actionCell {
+	/* justify-content: right; */
+	text-align: center;
+}
+
 table {
 	width: 100%;
 }

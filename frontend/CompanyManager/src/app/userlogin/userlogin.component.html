@@ -1,17 +1,23 @@
 <div class="main">
-	<form>
-		<mat-form-field>
-			<mat-label>Username</mat-label>
-			<input name="username" matInput [(ngModel)]="username" />
-		</mat-form-field>
+	<mat-card class="card">
+		<mat-card-content>
+			<h1>Login</h1>
 
-		<br />
-
-		<mat-form-field>
-			<mat-label>Password</mat-label>
-			<input name="pw" type="password" matInput [(ngModel)]="pw" />
-		</mat-form-field>
-	</form>
-
-	<button mat-button color="primary" (click)="login()">Login</button>
+			<form>
+				<mat-form-field>
+					<mat-label>Username</mat-label>
+					<input name="username" matInput [(ngModel)]="username" />
+				</mat-form-field>
+		
+				<br />
+		
+				<mat-form-field>
+					<mat-label>Password</mat-label>
+					<input name="pw" type="password" matInput [(ngModel)]="pw" />
+				</mat-form-field>
+			</form>
+		
+			<button mat-raised-button color="primary" (click)="login()">Login</button>
+		</mat-card-content>
+	</mat-card>
 </div>

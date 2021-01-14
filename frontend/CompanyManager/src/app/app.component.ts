@@ -9,5 +9,5 @@ import { AuthService } from './services/auth.service';
 export class AppComponent {
   title = 'CompanyManager';
 
-  constructor(private authService: AuthService) {}
+  constructor(public authService: AuthService) {}
 }
