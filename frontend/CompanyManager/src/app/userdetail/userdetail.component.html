@@ -12,18 +12,18 @@
 		
 				<br />
 		
-				<mat-form-field>
+				<!-- <mat-form-field>
 					<mat-label>Password</mat-label>
 					<input name="pw" type="password" matInput [ngModel]="user?.pw" (ngModelChange)="user.pw=$event" />
 				</mat-form-field>
 				
-				<br />
+				<br /> -->
 		
 				<mat-form-field>
 					<mat-label>Role</mat-label>
-					<mat-select name="role" [ngModel]="user?.roleId" (ngModelChange)="user.roleId=$event">
-						<mat-option value="1">Admin</mat-option>
-						<mat-option value="2">Normal user</mat-option>
+					<mat-select name="role" [(ngModel)]="user.roleId">
+						<mat-option [value]="1">Admin</mat-option>
+						<mat-option [value]="2">Normal user</mat-option>
 					</mat-select>
 				</mat-form-field>
 			</form>

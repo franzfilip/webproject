@@ -12,6 +12,7 @@ import { AuthService } from '../services/auth.service';
 export class UserdetailComponent implements OnInit {
 
   user: user = new user();
+  selected: number = 1;
 
   constructor(private route: ActivatedRoute, private authService: AuthService, private router: Router, public dialog: MatDialog) { }
 
@@ -43,8 +44,10 @@ export class UserdetailComponent implements OnInit {
     var context = this;
     xhr.onload = function () {
         console.log('data returned:', xhr.response);
-        if (xhr.response.data.user !== null)
+        if (xhr.response.data.user !== null) {
           context.user = xhr.response.data.user;
+          context.selected = context.user.roleId;
+        }
     }.bind(context);
 
     xhr.send(JSON.stringify(serverQuery));
